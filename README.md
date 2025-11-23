@@ -14,7 +14,7 @@ The link to the app we're using : https://github.com/namer203/webapp
 2. Create a box -> in this case it's hashicorp-education/ubuntu-24-04 version 0.1.0
 3. Set up sync folders, port forwarding and ansible in Vagrantfile.
 
-  config.vm.box = "hashicorp-education/ubuntu-24-04"
+  **config.vm.box = "hashicorp-education/ubuntu-24-04"**
   config.vm.box_version = "0.1.0"
 
   config.vm.hostname = "phpapp"
