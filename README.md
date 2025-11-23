@@ -60,6 +60,7 @@ This part was made similar to the vagrant+ansible part. We used multipass as it'
 
 ### Solution:
 **1.** Download and install snapd - with this package manager you download multipass. Cloud-init comes with multipass.
+
 **2.** Create a file name user-data.yml and add the provisioning text like  
       **a.** Update and upgrade packages  
       **b.** List the packages  
@@ -70,5 +71,7 @@ This part was made similar to the vagrant+ansible part. We used multipass as it'
       **g.** Clean up the folders  
       **h.** Create DB and User if they don't exist already  
       **i.** Import the apps database  
+      
 **3.** Run this command: sudo multipass launch --name phpapp-test --cloud-init user-data.yml
+
 **4.** It starts provisioning, after it finishes enter the vm: multipass shell phpapp-test
