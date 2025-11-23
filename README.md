@@ -59,16 +59,16 @@ Copying the files - By running multiple provisionings to test if certain parts w
 This part was made similar to the vagrant+ansible part. We used multipass as it's very beginner friendly. The difference between this set up and vagrant set up is that there's no need to download PHP packages as some Ubuntu images already have them - vagrant has a more minimalistic set up - depends on the boxes/images you use.
 
 ### Solution:
-1. Download and install snapd - with this package manager you download multipass. Cloud-init comes with multipass.
-2. Create a file name user-data.yml and add the provisioning text like
-      a. Update and upgrade packages  
-      b. List the packages  
-      c. Set up the main user  
-      d. Enable and start services  
+**1.** Download and install snapd - with this package manager you download multipass. Cloud-init comes with multipass.
+**2.** Create a file name user-data.yml and add the provisioning text like  
+      **a.** Update and upgrade packages  
+      **b.** List the packages  
+      **c.** Set up the main user  
+      **d.** Enable and start services  
             SSH, Apache, MySQL, Redis  
-      f. Download and unzip the app file from github  
-      g. Clean up the folders  
-      h. Create DB and User if they don't exist already  
-      i. Import the apps database  
-4. Run this command: sudo multipass launch --name phpapp-test --cloud-init user-data.yml
-5. It starts provisioning, after it finishes enter the vm: multipass shell phpapp-test
+      **f.** Download and unzip the app file from github  
+      **g.** Clean up the folders  
+      **h.** Create DB and User if they don't exist already  
+      **i.** Import the apps database  
+**3.** Run this command: sudo multipass launch --name phpapp-test --cloud-init user-data.yml
+**4.** It starts provisioning, after it finishes enter the vm: multipass shell phpapp-test
