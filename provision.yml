@@ -1,0 +1,104 @@
+- hosts: all
+  become: yes
+
+  vars:
+    app_path: /var/www/html/
+    db_name: igra_app
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install web server, PHP, MySQL, Redis
+      apt:
+        name:
+          - apache2
+          - php
+          - php-mysql
+          - mysql-server
+          - redis-server
+          - php-redis
+        state: present
+        update_cache: yes
+
+    - name: Make sure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Make sure MySQL is running
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+    - name: Make sure Redis is running
+      service:
+        name: redis-server
+        state: started
+        enabled: yes
+
+#    - name: Copy App files
+#      copy:
+#        src: ./app/
+#        dest: "{{app_path}}/"
+
+    - name: Fix permissions on app folder
+      file:
+        path: /var/www/html/myapp
+        owner: www-data
+        group: www-data
+        recurse: yes
+
+    - name: Install PYTHON MySQL for ansible
+      apt:
+        name: python3-pymysql
+        state: present
+
+#MYSQL
+    - name: Create DB
+      mysql_db:
+        name: "{{db_name}}"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+      register: db_exists
+
+    - name: Import SQL file (only if the DB is empty)
+      mysql_db:
+        name: "{{db_name}}"
+        state: import
+        target: /vagrant/app/db.sql
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+      when: db_exists.changed
+
+    - name: Create MySQL user with no password
+      mysql_user:
+        name: igra_user
+        password: ''
+        priv: "igra_app.*:ALL"
+        host: localhost
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+# FIREWALL
+    - name: Install UFW
+      apt:
+        name: ufw
+        state: present
+
+    - name: Allow SSH
+      ufw:
+        rule: allow
+        name: "OpenSSH"
+
+    - name: Allow HTTP/HTTPS
+      ufw:
+        rule: allow
+        port: "80,443"
+        proto: tcp
+
+    - name: Enable firewall
+      ufw:
+        state: enabled
