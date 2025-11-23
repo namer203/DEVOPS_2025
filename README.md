@@ -14,18 +14,18 @@ The link to the app we're using : https://github.com/namer203/webapp
 2. Create a box -> in this case it's hashicorp-education/ubuntu-24-04 version 0.1.0
 3. Set up sync folders, port forwarding and ansible in Vagrantfile.
 
-  **config.vm.box = "hashicorp-education/ubuntu-24-04"**
-  config.vm.box_version = "0.1.0"
+       config.vm.box = "hashicorp-education/ubuntu-24-04"
+       config.vm.box_version = "0.1.0"
 
-  config.vm.hostname = "phpapp"
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "forwarded_port", guest: 443, host: 8443
+       config.vm.hostname = "phpapp"
+       config.vm.network "forwarded_port", guest: 80, host: 8080
+       config.vm.network "forwarded_port", guest: 443, host: 8443
   
-  config.vm.synced_folder "./app", "/var/www/html", owner: "www-data", group: "www-data"
+       config.vm.synced_folder "./app", "/var/www/html", owner: "www-data", group: "www-data"
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provision.yml"
-  end
+       config.vm.provision "ansible" do |ansible|
+           ansible.playbook = "provision.yml"
+       end
   
 4. In the provisioning file provision.yml, specify the neccesary tasks such as
    
@@ -66,14 +66,14 @@ This part was made similar to the vagrant+ansible part. We used multipass as it'
 ### Solution:
 1. Download and install snapd - with this package manager you download multipass. Cloud-init comes with multipass.
 2. Create a file name user-data.yml and add the provisioning text like
-      a. Update and upgrade packages
-      b. List the packages
-      c. Set up the main user
-      d. Enable and start services
-            SSH, Apache, MySQL, Redis
-      f. Download and unzip the app file from github
-      g. Clean up the folders
-      h. Create DB and User if they don't exist already
-      i. Import the apps database
-3. Run this command: sudo multipass launch --name phpapp-test --cloud-init user-data.yml
-4. It starts provisioning, after it finishes enter the vm: multipass shell phpapp-test
+      a. Update and upgrade packages  
+      b. List the packages  
+      c. Set up the main user  
+      d. Enable and start services  
+            SSH, Apache, MySQL, Redis  
+      f. Download and unzip the app file from github  
+      g. Clean up the folders  
+      h. Create DB and User if they don't exist already  
+      i. Import the apps database  
+4. Run this command: sudo multipass launch --name phpapp-test --cloud-init user-data.yml
+5. It starts provisioning, after it finishes enter the vm: multipass shell phpapp-test
