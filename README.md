@@ -5,9 +5,9 @@ Automate creating and provisioning a VM with a project (application stack) of yo
 The automation for the 1. part of the homework (vagrant) was made by Vagrant and Ansible. The app consists of multiple php and js files, one db file and one css file.
 The 2nd part - cloud-init - was done with cloud_init ofcourse and multipass. It's made for the same app.
 
---------------- VAGRANT AND ANSIBLE ---------------
+#--------------- VAGRANT AND ANSIBLE ---------------
 
-Solution:
+###Solution:
 1. Download and install Vagrant, virtual box and ansible.
 2. Create a box -> in this case it's hashicorp-education/ubuntu-24-04 version 0.1.0
 3. Set up sync folders, port forwarding and ansible in Vagrantfile.
@@ -15,16 +15,16 @@ Solution:
   config.vm.box = "hashicorp-education/ubuntu-24-04"
   config.vm.box_version = "0.1.0"
 
-  # IMENUJ HOST KOT "phpapp", DODAJ FORWARD PORTE ZA HTTP IN HTTPS
+  IMENUJ HOST KOT "phpapp", DODAJ FORWARD PORTE ZA HTTP IN HTTPS
   config.vm.hostname = "phpapp"
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 443, host: 8443
 
-  # SYNCED FOLDERS, NAMESTO KOPIRANJA (app file mora bit v istem folderju kot vagrantfile - razn ce spremenis
+  SYNCED FOLDERS, NAMESTO KOPIRANJA (app file mora bit v istem folderju kot vagrantfile - razn ce spremenis
   # path za app folder)
   config.vm.synced_folder "./app", "/var/www/html", owner: "www-data", group: "www-data"
 
-  # AKTIVIRAJ PROVISION.YML ZA ANSIBLE PROVISION-ANJE
+  AKTIVIRAJ PROVISION.YML ZA ANSIBLE PROVISION-ANJE
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provision.yml"
   end
@@ -54,11 +54,11 @@ In "provision.yml", the SQL imports only if the DB is empty - this avoids the er
 Copying the files - By running multiple provisionings to test if certain parts work, it kept copying files into var/www/html/myapp and we ended up with a folder that contained many myapp folders -> /var/www/html/myapp/myapp/myapp/myapp/myapp/myapp - each myapp contained all the app files - fixed that by removing the copy part and syncing the folders.
 
 
---------------- CLOUD INIT AND MULTIPASS ---------------
+#--------------- CLOUD INIT AND MULTIPASS ---------------
 
 This part was made similar to the vagrant+ansible part. We used multipass as it's very beginner friendly. The difference between this set up and vagrant set up is that there's no need to download PHP packages as some Ubuntu images already have them - vagrant has a more minimalistic set up - depends on the boxes/images you use.
 
-Solution:
+###Solution:
 1. Download and install snapd - with this package manager you download multipass. Cloud-init comes with multipass.
 2. Create a file name user-data.yml and add the provisioning text like
       a. Update and upgrade packages
