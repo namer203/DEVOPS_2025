@@ -28,9 +28,7 @@ The link to the app we're using : https://github.com/namer203/webapp
        end
   
 4. In the provisioning file provision.yml, specify the neccesary tasks such as
-   
      a. Update apt cache  
-   
      b. Install web server, PHP, MySQL, Redis  
    
           Apache (web server) and PHP for website loading with php files
@@ -38,12 +36,9 @@ The link to the app we're using : https://github.com/namer203/webapp
           Redis for loading sessions in cache
    
      c. Certain services to make sure each part is up and running  
-   
      d. Copying app files to /var/www/html/myapp - 
 This part got replaced by syncing folders, which makes it faster and easier to work with. (We just commented it). Instead of the copy part, there is a checker for permissions on the folder.
-
      e. Creating and importing DB  
-   
      f. Setting up a firewall which allows SSH, HTTP and HTTPS to go through  
 
 To provision the vm, just type "vagrant provision" - before that you write "vagrant up" to start the vm.
