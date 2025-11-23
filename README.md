@@ -15,16 +15,12 @@ The 2nd part - cloud-init - was done with cloud_init ofcourse and multipass. It'
   config.vm.box = "hashicorp-education/ubuntu-24-04"
   config.vm.box_version = "0.1.0"
 
-  IMENUJ HOST KOT "phpapp", DODAJ FORWARD PORTE ZA HTTP IN HTTPS
   config.vm.hostname = "phpapp"
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 443, host: 8443
-
-  SYNCED FOLDERS, NAMESTO KOPIRANJA (app file mora bit v istem folderju kot vagrantfile - razn ce spremenis
-  path za app folder)
+  
   config.vm.synced_folder "./app", "/var/www/html", owner: "www-data", group: "www-data"
 
-  AKTIVIRAJ PROVISION.YML ZA ANSIBLE PROVISION-ANJE
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provision.yml"
   end
